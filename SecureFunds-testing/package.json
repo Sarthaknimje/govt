@@ -1,0 +1,37 @@
+{
+  "name": "securefunds-testing",
+  "version": "1.0.0",
+  "description": "Performance testing suite for SecureFunds government fund management platform on Ethereum Sepolia",
+  "main": "securefunds-caliper-test.js",
+  "scripts": {
+    "test": "node securefunds-caliper-test.js",
+    "test:small": "./run-test.sh --size=small",
+    "test:medium": "./run-test.sh --size=medium",
+    "test:large": "./run-test.sh --size=large",
+    "report": "node securefunds-caliper-report.js",
+    "start": "./run-test.sh"
+  },
+  "keywords": [
+    "blockchain",
+    "ethereum",
+    "sepolia",
+    "performance",
+    "testing",
+    "smart-contracts",
+    "government",
+    "transparency"
+  ],
+  "author": "Sarthak Nimje",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "ethers": "^5.8.0",
+    "fs-extra": "^11.3.0",
+    "perf_hooks": "^0.0.1",
+    "puppeteer": "^19.11.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "private": true
+}
