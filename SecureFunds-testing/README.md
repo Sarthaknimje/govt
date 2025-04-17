@@ -1,127 +1,113 @@
-# SecureFunds Performance Testing Suite
+# SecureFunds Testing Suite
 
-A comprehensive performance testing framework for the SecureFunds platform - a blockchain-based solution for transparent government fund management on Ethereum Sepolia network.
+A comprehensive testing framework for the SecureFunds DApp, which enables transparent tracking and validation of government PPP (Public-Private Partnership) projects using blockchain technology.
 
 ## Overview
 
-SecureFunds is a decentralized application that ensures transparent and efficient distribution of government funds for infrastructure projects like road construction. This testing suite simulates realistic user behavior and blockchain interactions to measure the performance, reliability, and scalability of the platform.
+The SecureFunds testing suite provides tools to validate government projects, test fund flow transactions, and verify project progress updates. It uses real PPP project data from [pppinindia.gov.in](https://www.pppinindia.gov.in/list_of_all_ppp_projects) to simulate blockchain interactions.
 
-## Features
+## Key Features
 
-- **Role-Based Testing**: Simulates different user types (Government Officials, Contractors, Auditors)
-- **Transaction Simulation**: Tests various transaction types including fund releases, project registrations, material purchases, progress updates, and contractor verifications
-- **Performance Metrics**: Measures transaction throughput, latency, success rates, and gas efficiency
-- **Ethereum Sepolia Focus**: Specifically designed to test on the Sepolia testnet
-- **Detailed Reporting**: Generates comprehensive HTML reports with interactive charts and metrics
-- **Configurable Tests**: Adjustable user count, batch sizes, and target environments
+- **Government Project Validation**: Validates project data against blockchain smart contracts
+- **Fund Flow Testing**: Tests the release of funds for various project milestones
+- **Progress Update Testing**: Validates project progress reporting and milestone verification
+- **Performance Testing**: Measures blockchain transaction performance and gas costs
+- **Security Testing**: Validates security mechanisms like multi-signature approvals
 
-## Test Transaction Types
+## Setup and Installation
 
-1. **Fund Release**: Government officials releasing funds to contractors in phases
-2. **Project Registration**: Contractors registering new infrastructure projects
-3. **Material Purchase**: Contractors purchasing construction materials through the platform
-4. **Progress Update**: Contractors updating project progress with photo/video evidence
-5. **Contractor Verification**: Government officials verifying contractor credentials
+### Prerequisites
 
-## Requirements
+- Node.js (v14 or above)
+- NPM (v6 or above)
 
-- Node.js (v14 or higher)
-- npm or yarn
-- Bash shell (for running the test script)
+### Installation
 
-## Installation
-
-1. Clone this repository:
-   ```bash
-   git clone <repository_url>
-   cd SecureFunds-testing
+1. Clone the repository:
+   ```
+   git clone https://github.com/Sarthaknimje/govt.git
+   cd govt/SecureFunds-testing
    ```
 
 2. Install dependencies:
-   ```bash
+   ```
    npm install
    ```
 
-## Usage
+## Running the Tests
 
-### Running Tests
+### Quick Start
 
-Basic test with default settings:
+The simplest way to run the tests is to use the provided shell script:
+
 ```bash
-./run-test.sh
+chmod +x run-simple-test.sh
+./run-simple-test.sh
 ```
 
-Custom test with specific parameters:
+This will:
+1. Generate project data files
+2. Run a simplified validation test
+3. Create a validation results file
+4. Display deployment information
+
+### Full Test Suite
+
+For a more comprehensive test, use the full test script:
+
 ```bash
-./run-test.sh --url=https://secure-funds.vercel.app/ --users=150
+chmod +x run-securefunds-tests.sh
+./run-securefunds-tests.sh
 ```
 
-Using npm scripts:
-```bash
-# Run with default settings
-npm start
+This will run the complete suite of tests including:
+- Project validation
+- Fund flow tests
+- Progress update tests
+- HTML report generation
 
-# Run small test (50 users)
-npm run test:small
+### Running Individual Tests
 
-# Run medium test (100 users)
-npm run test:medium
+To run tests individually:
 
-# Run large test (250 users)
-npm run test:large
-```
+1. Generate project data:
+   ```
+   node govt-projects-data.js
+   ```
 
-### Command Line Options
+2. Run project validation:
+   ```
+   node project-validation-test.js
+   ```
 
-- `--url=URL`: Target application URL (default: https://secure-funds.vercel.app/)
-- `--users=NUMBER`: Number of users to simulate (default: 100)
-- `--size=SIZE`: Test size preset (small, medium, large)
-- `--help`: Display help information
+## Test Reports
 
-## Output
+After running the tests, the following reports are generated:
 
-After running the test, two files will be generated:
+- `project-validation-results.json`: Contains validation results in JSON format
+- `project-validation-report.html`: Visual HTML report of test results
 
-1. `securefunds-performance-report.json`: Complete JSON data with all metrics
-2. `securefunds-performance-report.html`: Interactive HTML report with visualizations
+## Deployment Information
 
-The HTML report includes:
-- Transaction success rates
-- Throughput (TPS) and latency metrics
-- Gas usage statistics
-- Transaction type distribution
-- Role-based user distribution
-- Fund release and progress update details
-- Error information
+- **DApp URL**: [https://secure-funds.vercel.app/](https://secure-funds.vercel.app/)
+- **Smart Contracts**: [GitHub Repository](https://github.com/Sarthaknimje/govt/tree/main/contracts)
+- **API Endpoints**: [https://api.secure-funds.vercel.app/](https://api.secure-funds.vercel.app/)
 
-## Metrics Explained
+## Security Features
 
-- **Success Rate**: Percentage of transactions that complete successfully
-- **Transaction Throughput**: Number of transactions processed per second (TPS)
-- **Average Latency**: Average time from transaction submission to confirmation
-- **Block Utilization**: Percentage of Ethereum block capacity used by test transactions
-- **Gas Efficiency**: Average gas used per transaction type
+The SecureFunds platform implements the following security features, all tested within this suite:
 
-## Government Fund Flow Simulation
-
-This testing suite simulates the entire flow of government funds:
-
-1. **Central to Local**: Simulation of fund allocation from central government to local authorities
-2. **Milestone-Based Releases**: Release of funds based on project milestones and progress
-3. **Material Procurement**: Direct material purchase tracking with blockchain verification
-4. **Progress Verification**: Photo/video evidence storage and verification before new fund releases
-5. **Contractor Payment**: Direct payment to contractors with transaction transparency
-
-## Security Notes
-
-- This is a testing framework that simulates blockchain interactions without making actual transactions
-- No real ETH or funds are used during testing
-- Test wallets are generated randomly for simulation purposes only
-
-## Customization
-
-To modify transaction types or their behavior, edit the `TX_TYPES` array and related functions in `securefunds-caliper-test.js`.
+- Multi-signature fund release
+- Role-based access control
+- Real-time fraud detection
+- Anti-corruption protection mechanisms
+- Transparent fund tracking with blockchain-verified milestones
+- Zero-knowledge proof for sensitive project data
 
 ## License
 
-MIT 
+MIT License
+
+## Contact
+
+For more information, contact the project maintainer at [sarth.nimje@gmail.com](mailto:sarth.nimje@gmail.com) 
