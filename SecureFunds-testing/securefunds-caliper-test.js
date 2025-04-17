@@ -128,15 +128,58 @@ function selectTransactionType() {
   return TX_TYPES[0].name;
 }
 
-// Generate unknown project details with N/A phase and milestone
+// Generate project details with N/A phase and milestone
 function generateUnknownProject() {
+  // Project types with proper names
+  const projectTypes = [
+    "National Highway Development",
+    "Rural Road Construction",
+    "Metro Rail Extension",
+    "Municipal Bridge Repair",
+    "Smart City Infrastructure",
+    "Affordable Housing Complex",
+    "Government Hospital Construction",
+    "Irrigation Canal Renovation",
+    "Railway Station Modernization",
+    "Urban Waste Management",
+    "Solar Power Plant Installation",
+    "Drinking Water Treatment Facility",
+    "Primary School Development",
+    "Eco-Tourism Resort Development",
+    "Port Terminal Expansion"
+  ];
+  
+  // Locations
+  const locations = [
+    "Pune District", 
+    "Nagpur Division", 
+    "Mumbai Metropolitan Area", 
+    "Chennai Urban Zone", 
+    "Bengaluru North",
+    "Delhi NCR", 
+    "Kolkata East", 
+    "Ahmedabad West", 
+    "Bhopal Central", 
+    "Jaipur Rural",
+    "Hyderabad IT Corridor",
+    "Lucknow Heritage Zone",
+    "Chandigarh Industrial Area",
+    "Kochi Backwaters",
+    "Vishakhapatnam Port Area"
+  ];
+  
+  // Select a random project type and location
+  const projectType = projectTypes[Math.floor(Math.random() * projectTypes.length)];
+  const location = locations[Math.floor(Math.random() * locations.length)];
+  
+  // Generate project data
   return {
-    projectId: `UNKNOWN-${Math.floor(Math.random() * 10000)}`,
-    projectName: `Unknown Project`, 
+    projectId: `PID-${Math.floor(Math.random() * 10000)}`,
+    projectName: `${projectType} - ${location}`,
     phase: "N/A",
     milestone: "N/A",
     completionPercentage: Math.floor(Math.random() * 100),
-    location: `${['North', 'South', 'East', 'West', 'Central'][Math.floor(Math.random() * 5)]} Region`,
+    location: location,
     authority: `${['Central', 'State', 'Municipal'][Math.floor(Math.random() * 3)]} Authority`,
     estimatedTime: `${Math.floor(Math.random() * 36) + 6} months`,
     contractorId: `CONTR-${Math.floor(Math.random() * 1000)}`
@@ -309,13 +352,17 @@ async function simulateBlockchainTransaction(wallet, txType, amount = 0.1) {
         }
         break;
       case 'progressUpdate':
-        // Add unknown projects with N/A phase and milestone (25% chance)
+        // Add projects with N/A phase and milestone (25% chance)
         if (Math.random() < 0.25) {
           const unknownProject = generateUnknownProject();
+          
+          // Generate meaningful completion percentage
+          const completion = [15, 25, 30, 40, 50, 65, 75, 80, 90, 95][Math.floor(Math.random() * 10)];
+          
           additionalData = {
             projectId: unknownProject.projectId,
             projectName: unknownProject.projectName,
-            completion: unknownProject.completionPercentage,
+            completion: completion,
             phase: unknownProject.phase,
             milestone: unknownProject.milestone,
             reportHash: `0x${Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('')}`,
@@ -327,7 +374,7 @@ async function simulateBlockchainTransaction(wallet, txType, amount = 0.1) {
         } else {
           additionalData = {
             projectId: `PROJ-${Math.floor(Math.random() * 10000)}`,
-            completion: Math.floor(Math.random() * 100) + 1,
+            completion: [15, 25, 30, 40, 50, 65, 75, 80, 90, 95][Math.floor(Math.random() * 10)],
             phase: Math.floor(Math.random() * 4) + 1,
             reportHash: `0x${Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('')}`,
             imageHashes: [

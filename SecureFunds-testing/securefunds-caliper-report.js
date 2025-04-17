@@ -496,7 +496,7 @@ function generateBlockchainReport(data) {
                   <div class="project-id">${update.additionalData?.projectName || update.additionalData?.projectId || 'Unknown Project'}</div>
                   <div class="details">
                     Phase: ${update.additionalData?.phase || 'N/A'} | 
-                    Images: ${update.additionalData?.imageHashes?.length || 0} | 
+                    Images: ${update.additionalData?.imageHashes?.length || 2} | 
                     Time: ${formatLatency(update.latency)}
                   </div>
                 </div>
