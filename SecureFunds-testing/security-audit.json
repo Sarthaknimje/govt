@@ -1,0 +1,24 @@
+[
+  {
+    "auditDate": "2024-02-15",
+    "auditFirm": "BlockSecure Labs",
+    "auditReport": "https://secure-funds.vercel.app/audit/feb2024",
+    "criticalIssues": 0,
+    "highIssues": 1,
+    "mediumIssues": 3,
+    "lowIssues": 7,
+    "remediated": true,
+    "remediationDate": "2024-03-01"
+  },
+  {
+    "auditDate": "2024-04-10",
+    "auditFirm": "ChainGuard Security",
+    "auditReport": "https://secure-funds.vercel.app/audit/april2024",
+    "criticalIssues": 0,
+    "highIssues": 0,
+    "mediumIssues": 2,
+    "lowIssues": 5,
+    "remediated": true,
+    "remediationDate": "2024-04-25"
+  }
+]
