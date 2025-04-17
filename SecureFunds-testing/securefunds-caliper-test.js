@@ -128,6 +128,21 @@ function selectTransactionType() {
   return TX_TYPES[0].name;
 }
 
+// Generate unknown project details with N/A phase and milestone
+function generateUnknownProject() {
+  return {
+    projectId: `UNKNOWN-${Math.floor(Math.random() * 10000)}`,
+    projectName: `Unknown Project`, 
+    phase: "N/A",
+    milestone: "N/A",
+    completionPercentage: Math.floor(Math.random() * 100),
+    location: `${['North', 'South', 'East', 'West', 'Central'][Math.floor(Math.random() * 5)]} Region`,
+    authority: `${['Central', 'State', 'Municipal'][Math.floor(Math.random() * 3)]} Authority`,
+    estimatedTime: `${Math.floor(Math.random() * 36) + 6} months`,
+    contractorId: `CONTR-${Math.floor(Math.random() * 1000)}`
+  };
+}
+
 // Generate realistic fund amounts based on transaction type
 function generateFundAmount(txType) {
   switch(txType) {
@@ -249,22 +264,78 @@ async function simulateBlockchainTransaction(wallet, txType, amount = 0.1) {
     let additionalData = {};
     switch(txType) {
       case 'fundRelease':
-        additionalData = {
-          projectId: `PROJ-${Math.floor(Math.random() * 10000)}`,
-          phase: Math.floor(Math.random() * 4) + 1,
-          milestone: `Milestone ${Math.floor(Math.random() * 5) + 1}`,
-          receiver: `0x${Array.from({length: 40}, () => Math.floor(Math.random() * 16).toString(16)).join('')}`
-        };
+        // Add unknown projects with N/A phase and milestone (20% chance)
+        if (Math.random() < 0.2) {
+          const unknownProject = generateUnknownProject();
+          additionalData = {
+            projectId: unknownProject.projectId,
+            projectName: unknownProject.projectName,
+            phase: unknownProject.phase,
+            milestone: unknownProject.milestone,
+            receiver: `0x${Array.from({length: 40}, () => Math.floor(Math.random() * 16).toString(16)).join('')}`
+          };
+        } else {
+          additionalData = {
+            projectId: `PROJ-${Math.floor(Math.random() * 10000)}`,
+            phase: Math.floor(Math.random() * 4) + 1,
+            milestone: `Milestone ${Math.floor(Math.random() * 5) + 1}`,
+            receiver: `0x${Array.from({length: 40}, () => Math.floor(Math.random() * 16).toString(16)).join('')}`
+          };
+        }
         break;
       case 'projectRegistration':
-        additionalData = {
-          projectId: `PROJ-${Math.floor(Math.random() * 10000)}`,
-          projectName: `Road Construction Phase ${Math.floor(Math.random() * 10) + 1}`,
-          location: `District ${Math.floor(Math.random() * 30) + 1}`,
-          estimatedDuration: Math.floor(Math.random() * 18) + 6, // 6-24 months
-          totalBudget: Math.floor(Math.random() * 9000000) + 1000000, // 10-100 lakhs
-          contractorId: `CONTR-${Math.floor(Math.random() * 1000)}`
-        };
+        // Add unknown projects with N/A phase and milestone (15% chance)
+        if (Math.random() < 0.15) {
+          const unknownProject = generateUnknownProject();
+          additionalData = {
+            projectId: unknownProject.projectId,
+            projectName: unknownProject.projectName,
+            phase: unknownProject.phase,
+            milestone: unknownProject.milestone,
+            location: unknownProject.location,
+            estimatedDuration: parseInt(unknownProject.estimatedTime),
+            totalBudget: Math.floor(Math.random() * 9000000) + 1000000,
+            contractorId: unknownProject.contractorId
+          };
+        } else {
+          additionalData = {
+            projectId: `PROJ-${Math.floor(Math.random() * 10000)}`,
+            projectName: `Road Construction Phase ${Math.floor(Math.random() * 10) + 1}`,
+            location: `District ${Math.floor(Math.random() * 30) + 1}`,
+            estimatedDuration: Math.floor(Math.random() * 18) + 6, // 6-24 months
+            totalBudget: Math.floor(Math.random() * 9000000) + 1000000, // 10-100 lakhs
+            contractorId: `CONTR-${Math.floor(Math.random() * 1000)}`
+          };
+        }
+        break;
+      case 'progressUpdate':
+        // Add unknown projects with N/A phase and milestone (25% chance)
+        if (Math.random() < 0.25) {
+          const unknownProject = generateUnknownProject();
+          additionalData = {
+            projectId: unknownProject.projectId,
+            projectName: unknownProject.projectName,
+            completion: unknownProject.completionPercentage,
+            phase: unknownProject.phase,
+            milestone: unknownProject.milestone,
+            reportHash: `0x${Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('')}`,
+            imageHashes: [
+              `0x${Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('')}`,
+              `0x${Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('')}`
+            ]
+          };
+        } else {
+          additionalData = {
+            projectId: `PROJ-${Math.floor(Math.random() * 10000)}`,
+            completion: Math.floor(Math.random() * 100) + 1,
+            phase: Math.floor(Math.random() * 4) + 1,
+            reportHash: `0x${Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('')}`,
+            imageHashes: [
+              `0x${Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('')}`,
+              `0x${Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('')}`
+            ]
+          };
+        }
         break;
       case 'materialPurchase':
         additionalData = {
@@ -273,18 +344,6 @@ async function simulateBlockchainTransaction(wallet, txType, amount = 0.1) {
           quantity: Math.floor(Math.random() * 1000) + 100,
           vendor: `VENDOR-${Math.floor(Math.random() * 500)}`,
           deliveryDate: new Date(Date.now() + Math.floor(Math.random() * 30) * 86400000).toISOString().split('T')[0]
-        };
-        break;
-      case 'progressUpdate':
-        additionalData = {
-          projectId: `PROJ-${Math.floor(Math.random() * 10000)}`,
-          completion: Math.floor(Math.random() * 100) + 1,
-          phase: Math.floor(Math.random() * 4) + 1,
-          reportHash: `0x${Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('')}`,
-          imageHashes: [
-            `0x${Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('')}`,
-            `0x${Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('')}`
-          ]
         };
         break;
       case 'contractorVerification':

@@ -470,7 +470,7 @@ function generateBlockchainReport(data) {
               fundReleases.map(release => `
                 <div class="fund-card">
                   <div class="amount">${formatCurrency(release.fundAmount || 0)}</div>
-                  <div class="project-id">${release.additionalData?.projectId || 'Unknown Project'}</div>
+                  <div class="project-id">${release.additionalData?.projectName || release.additionalData?.projectId || 'Unknown Project'}</div>
                   <div class="details">
                     Phase: ${release.additionalData?.phase || 'N/A'} | 
                     Milestone: ${release.additionalData?.milestone || 'N/A'} | 
@@ -493,7 +493,7 @@ function generateBlockchainReport(data) {
               progressUpdates.map(update => `
                 <div class="progress-update-card">
                   <div class="completion">${update.additionalData?.completion || 0}% Complete</div>
-                  <div class="project-id">${update.additionalData?.projectId || 'Unknown Project'}</div>
+                  <div class="project-id">${update.additionalData?.projectName || update.additionalData?.projectId || 'Unknown Project'}</div>
                   <div class="details">
                     Phase: ${update.additionalData?.phase || 'N/A'} | 
                     Images: ${update.additionalData?.imageHashes?.length || 0} | 
